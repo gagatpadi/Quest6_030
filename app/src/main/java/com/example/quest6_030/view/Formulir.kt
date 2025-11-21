@@ -1,21 +1,18 @@
-package com.example.quest6_030.view
+package com.example.pertemuan6.view
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.text.KeyboardOptions // Tambahan opsional untuk keyboard
 import androidx.compose.material3.Button
 import androidx.compose.material3.DividerDefaults.Thickness
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
@@ -23,100 +20,104 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue // Import penting untuk 'by'
+import androidx.compose.runtime.mutableStateOf // Import penting
+import androidx.compose.runtime.remember // Import penting
+import androidx.compose.runtime.setValue // Import penting untuk 'by'
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType // Tambahan opsional
 import androidx.compose.ui.unit.dp
 import com.example.quest6_030.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FormIsian(
-
-    pilihanJK: List<String> ,
-    onSubmitButtonClicked: (MutableList<String>) -> Unit,
-    modifier: Modifier = Modifier
-){
-
-    var txtNama by rememberSaveable { mutableStateOf("") }
-    var txtAlamat by remember { mutableStateOf("") }
+    jenisK: List<String> = listOf("Laki-Laki", "Perempuan"),
+    OnSubmitBtnClick: (List<String>) -> Unit // Update parameter agar bisa mengirim data
+) {
+    // 1. Deklarasikan State secara terpisah untuk setiap variabel
+    var txtNama by remember { mutableStateOf("") }
     var txtGender by remember { mutableStateOf("") }
-    val lisData: MutableList<String> = mutableStateOf(txtNama, txtGender, txtAlamat)
+    var txtAlamat by remember { mutableStateOf("") }
 
-    Scaffold (modifier = Modifier,
-        {
+    Scaffold(
+        modifier = Modifier,
+        topBar = {
             TopAppBar(
-                title = { Text(text = stringResource(id= R.string.home), color = Color.White)},
+                title = { Text(text = stringResource(id = R.string.home), color = Color.White) },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
-                    containerColor = colorResource(id = R.color.teal_700))
-            ) }
+                    containerColor = colorResource(id = R.color.teal_700)
+                )
+            )
+        }
     ) { isiRuang ->
-        Column (modifier = Modifier.padding(paddingValues = isiRuang),
+        Column(
+            modifier = Modifier
+                .padding(paddingValues = isiRuang)
+                .fillMaxWidth(), // Tambahkan fillMaxWidth agar layout rapi
             verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally) {
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // Input Nama
             OutlinedTextField(
-                value =txtNama,
+                value = txtNama, // Hubungkan dengan state txtNama
                 singleLine = true,
                 modifier = Modifier
                     .padding(top = 20.dp)
-                    .width(width = 250.dp),
-                label = {Text(text = "Nama Lengkap")},
-                onValueChange = {
-                    txtNama = it
-                },
+                    .width(250.dp),
+                label = { Text(text = "Nama Lengkap") },
+                onValueChange = { txtNama = it } // Update state saat mengetik
             )
-            HorizontalDivider(modifier = Modifier
-                .padding(all = 20.dp)
-                .width(width = 250.dp), thickness = Thickness,color = Color.Red)
 
+            HorizontalDivider(
+                modifier = Modifier
+                    .padding(all = 20.dp)
+                    .width(250.dp),
+                thickness = Thickness,
+                color = Color.Red
+            )
+
+            // Input Gender (Radio Button)
             Row {
-                pilihanJK.forEach { item ->
-                    Row(modifier = Modifier.selectable(
-                        selected = txtGender == item,
-                        onClick = {
-                            txtGender = item
-                        }
-                    ),
-                        verticalAlignment = Alignment.CenterVertically) {
+                jenisK.forEach { item ->
+                    Row(verticalAlignment = Alignment.CenterVertically) {
                         RadioButton(
-                            selected = txtGender == item,
-                            onClick = {
-                                txtGender = item
-                            }
+                            selected = txtGender == item, // Cek apakah item ini yang dipilih
+                            onClick = { txtGender = item } // Update state saat diklik
                         )
+                        Text(text = item) // Tampilkan label teks di sebelah radio button
                     }
                 }
             }
-            HorizontalDivider(modifier = Modifier
-                .padding(all = 20.dp)
-                .width(width = 250.dp),
+
+            HorizontalDivider(
+                modifier = Modifier
+                    .padding(all = 20.dp)
+                    .width(250.dp),
                 thickness = 1.dp,
                 color = Color.Red
             )
+
+            // Input Alamat
             OutlinedTextField(
-                value = txtAlamat,
+                value = txtAlamat, // Hubungkan dengan state txtAlamat
                 singleLine = true,
-                shape = MaterialTheme.shapes.medium,
-                modifier = Modifier
-                    .width(width = 250.dp),
-                label = {Text(text = "Alamat Lengkap")},
-                onValueChange = {
-                    txtAlamat = it
-                }
+                modifier = Modifier.width(250.dp),
+                label = { Text(text = "Alamat") },
+                onValueChange = { txtAlamat = it } // Update state saat mengetik
             )
-            Spacer(modifier = Modifier.height(height = 30.dp))
+
+            Spacer(modifier = Modifier.height(30.dp))
+
             Button(
-                modifier = Modifier.fillMaxWidth(fraction = 1f),
-                enabled = txtAlamat.isNotEmpty(),
-                onClick = {onSubmitButtonClicked(lisData)}
+                modifier = Modifier
+                    .fillMaxWidth(fraction = 0.8f) // Sesuaikan lebar tombol
+                    .padding(all = 25.dp),
+                onClick = { OnSubmitBtnClick(listOf(txtNama, txtGender, txtAlamat)) }
             ) {
                 Text(text = stringResource(id = R.string.submit))
             }
