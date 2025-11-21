@@ -1,4 +1,4 @@
 package com.example.quest6_030.model
 
-class Siswa {
+object DataJk {
 }
