@@ -1,4 +1,4 @@
-package com.example.pertemuan6.view
+package com.example.quest6_030.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,7 +27,7 @@ import androidx.compose.ui.layout.HorizontalAlignmentLine
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.pertemuan6.R
+import com.example.quest6_030.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
