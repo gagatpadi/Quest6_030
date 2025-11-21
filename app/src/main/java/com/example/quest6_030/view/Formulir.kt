@@ -32,8 +32,7 @@ import com.example.quest6_030.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FormIsian(
-    jenisK:List<String> = listOf("Laki-Laki","Perempuan"),
-    OnSubmitBtnClick : () -> Unit
+    pilihanJK: List<String>
 ){
     Scaffold (modifier = Modifier,
         topBar = {
